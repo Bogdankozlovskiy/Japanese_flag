@@ -60,4 +60,6 @@ def flag(N):
     return quarter_field[0]
 
 
-print(flag(6))
+if __name__ == '__main__':
+    N = input('enter the N: ')
+    print(flag(N))
