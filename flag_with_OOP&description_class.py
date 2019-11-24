@@ -35,9 +35,12 @@ class BuildFlag:
             self._end_row_draw_circle)
         return rows
 
+    def _column_for_draw(self, index):
+        return self._half_columns - index
+
     def _draw_border_quarter_circle(self):
         for index, row in enumerate(self._rows_for_draw(), 1):
-            self._quarter_field[row][self._half_columns - index] = '*'
+            self._quarter_field[row][self._column_for_draw(index)] = '*'
 
     def _rows_for_pour(self):
         rows = range(
