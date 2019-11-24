@@ -24,10 +24,8 @@ class BuildFlag:
         self._end_row_draw_circle = N
 
     def _build_quarter_field(self):
-        self._quarter_field = []
         simple_row = [" " for i in range(self._half_columns)]
-        for row in range(self._half_rows):
-            self._quarter_field.append(simple_row[::])
+        self._quarter_field = [simple_row[::] for i in range(self._half_rows)]
 
     def _rows_for_draw(self):
         rows = range(
