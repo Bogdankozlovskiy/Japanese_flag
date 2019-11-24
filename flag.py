@@ -39,7 +39,7 @@ def add_quarter_border_field(quarter_field):
     quarter_field.insert(0, ['#' for i in range(len(quarter_field[0]))])
 
 
-def builf_flag_by_quarter_field(quarter):
+def build_flag_by_quarter_field(quarter):
     for row in quarter:
         row.extend(row[::-1])
     quarter.extend(quarter[::-1])
@@ -56,7 +56,7 @@ def flag(N):
     draw_border_quarter_circle(quarter_field)
     pour_angle_in_quarter_circle(quarter_field)
     add_quarter_border_field(quarter_field)
-    builf_flag_by_quarter_field(quarter_field)
+    build_flag_by_quarter_field(quarter_field)
     return quarter_field[0]
 
 
