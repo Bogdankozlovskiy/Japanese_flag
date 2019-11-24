@@ -18,54 +18,70 @@ class BuildFlag:
 
     def __init__(self, N):
         self.N = N
-        self.half_rows = self.N
-        self.half_columns = 3 * self.N // 2
-        self.start_row_draw_circle = N // 2
-        self.end_row_draw_circle = N
+        self._half_rows = self.N
+        self._half_columns = 3 * self.N // 2
+        self._start_row_draw_circle = N // 2
+        self._end_row_draw_circle = N
 
-    def build_quarter_field(self):
-        self.quarter_field = []
-        for row in range(self.half_rows):
-            self.quarter_field.append([" " for i in range(self.half_columns)])
+    def _build_quarter_field(self):
+        self._quarter_field = []
+        simple_row = [" " for i in range(self._half_columns)]
+        for row in range(self._half_rows):
+            self._quarter_field.append(simple_row[::])
 
-    def draw_border_quarter_circle(self):
-        rows_for_draw = range(
-            self.start_row_draw_circle,
-            self.end_row_draw_circle)
-        for index, row in enumerate(rows_for_draw, 1):
-            self.quarter_field[row][self.half_columns - index] = '*'
+    def _rows_for_draw(self):
+        rows = range(
+            self._start_row_draw_circle,
+            self._end_row_draw_circle)
+        return rows
 
-    def pour_angle_in_quarter_circle(self):
-        rows_for_pour = range(
-            self.start_row_draw_circle + 1,
-            self.end_row_draw_circle)
-        for index, row in enumerate(rows_for_pour, 1):
-            for column in range(self.half_columns - index, self.half_columns):
-                self.quarter_field[row][column] = 'O'
+    def _draw_border_quarter_circle(self):
+        for index, row in enumerate(self._rows_for_draw(), 1):
+            self._quarter_field[row][self._half_columns - index] = '*'
 
-    def add_quarter_border_field(self):
-        for row in self.quarter_field:
+    def _rows_for_pour(self):
+        rows = range(
+            self._start_row_draw_circle + 1,
+            self._end_row_draw_circle)
+        return rows
+
+    def _columns_for_pour(self, index):
+        columns = range(
+            self._half_columns - index,
+            self._half_columns)
+        return columns
+
+    def _pour_angle_in_quarter_circle(self):
+        for index, row in enumerate(self._rows_for_pour(), 1):
+            for column in self._columns_for_pour(index):
+                self._quarter_field[row][column] = 'O'
+
+    def _add_quarter_border_field(self):
+        for row in self._quarter_field:
             row.insert(0, '#')
-        border = ['#' for i in range(self.half_columns + 1)]
-        self.quarter_field.insert(0, border)
+        border = ['#' for i in range(self._half_columns + 1)]
+        self._quarter_field.insert(0, border)
 
-    def build_flag_by_quarter_field(self):
-        for row in self.quarter_field:
+    def _build_flag_by_quarter_field(self):
+        for row in self._quarter_field:
             row.extend(row[::-1])
-        self.quarter_field.extend(self.quarter_field[::-1])
-        for index in range(self.half_rows * 2 + 2):
-            self.quarter_field[index] = "".join(self.quarter_field[index])
-        self.flag = "\n".join(self.quarter_field)
-        self.quarter_field.clear()
+        self._quarter_field.extend(self._quarter_field[::-1])
+        for index in range(self._half_rows * 2 + 2):
+            self._quarter_field[index] = "".join(self._quarter_field[index])
+        self.flag = "\n".join(self._quarter_field)
+        self._quarter_field.clear()
+
+    def run(self):
+        self._build_quarter_field()
+        self._draw_border_quarter_circle()
+        self._pour_angle_in_quarter_circle()
+        self._add_quarter_border_field()
+        self._build_flag_by_quarter_field()
 
 
 def flag(N):
     factory = BuildFlag(N)
-    factory.build_quarter_field()
-    factory.draw_border_quarter_circle()
-    factory.pour_angle_in_quarter_circle()
-    factory.add_quarter_border_field()
-    factory.build_flag_by_quarter_field()
+    factory.run()
     return factory.flag
 
 
