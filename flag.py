@@ -61,5 +61,6 @@ def flag(N):
 
 
 if __name__ == '__main__':
-    N = input('enter the N: ')
-    print(flag(N))
+    print(flag(2))
+    print(flag(4))
+    print(flag(6))
