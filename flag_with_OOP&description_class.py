@@ -13,7 +13,7 @@ class CheckN:
         instance.__dict__[self.name] = value
 
 
-class Build_flag:
+class BuildFlag:
     N = CheckN()
 
     def __init__(self, N):
@@ -53,7 +53,7 @@ class Build_flag:
 
 
 def flag(N):
-    factory = Build_flag(N)
+    factory = BuildFlag(N)
     factory.build_quarter_field()
     factory.draw_border_quarter_circle()
     factory.pour_angle_in_quarter_circle()
