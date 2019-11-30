@@ -1,15 +1,14 @@
 class CheckN:
-    class ArgumentError(Exception):
-        pass
-
     def __set_name__(self, owner, name):
         self.name = name
 
     def __set__(self, instance, value):
         if type(value) != int:
-            raise self.ArgumentError("type must be int")
+            raise AttributeError("type must be int")
         if value % 2:
-            raise self.ArgumentError('digit must be even')
+            raise AttributeError('digit must be even')
+        if value == 0:
+            raise AttributeError('N have to more then zero')
         instance.__dict__[self.name] = value
 
 
